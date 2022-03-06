@@ -1,0 +1,22 @@
+version: '3.1'
+
+services:
+  firestore:
+    build: ./firestore-emulator
+    container_name: firestore-emulator
+    ports:
+      - "8180:8180"
+    networks:
+      - issue-network
+  test:
+    image: test
+    container_name: test
+    ports:
+      - "8080:8080"
+    networks:
+      - issue-network
+    environment:
+      - FIRESTORE_EMULATOR_HOST=firestore:8180
+
+networks:
+  issue-network:
